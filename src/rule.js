@@ -18,8 +18,8 @@ class Rule {
         return this.handlerArgs;
     }
 
-    invoke(value, validator) {
-        const args = [value, validator].concat(this.handlerArgs);
+    invoke(value, values) {
+        const args = [value, values].concat(this.handlerArgs);
         return this.handler.apply(this, args);
     }
 }

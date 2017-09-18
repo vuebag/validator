@@ -1,3 +1,4 @@
+const FieldRuleError = require('./field-rule-error');
 const promiseTools = require('./tools/promise');
 
 class Statement {
@@ -16,21 +17,18 @@ class Statement {
         return this;
     }
 
-    _invokeRule(rule, value, validator) {
-        return Promise.resolve( rule.invoke(value, validator) );
+    _invokeRule(rule, value, values) {
+        return Promise.resolve( rule.invoke(value, values) );
     }
 
-    _invoke(value, validator) {
+    _invoke(value, values) {
         const errors = [];
 
         return promiseTools
             .series(this.rules, rule => {
-                return this._invokeRule(rule, value, validator)
+                return this._invokeRule(rule, value, values)
                     .catch(() => {
-                        errors.push({
-                            field: this.field,
-                            rule: rule,
-                        });
+                        errors.push(new FieldRuleError(this.field, rule));
                     });
             })
             .then(() => {
