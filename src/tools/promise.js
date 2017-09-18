@@ -1,7 +1,3 @@
-function isThenable(entity) {
-    return typeof entity.then !== 'undefined';
-}
-
 function series(items, handler) {
     const itemsLeft = items.slice(0);
     const nextItem = itemsLeft.shift();
@@ -20,6 +16,5 @@ function series(items, handler) {
 }
 
 module.exports = {
-    isThenable,
     series,
 };

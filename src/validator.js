@@ -9,10 +9,6 @@ class Validator {
         this.messages = messages;
     }
 
-    getValue(path) {
-
-    }
-
     test(values) {
         return promiseTools
             .series(this.statements, statement => {
