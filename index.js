@@ -16,32 +16,33 @@ field.prototype.array = function(name) {
     return new Statement(new FieldArray(name));
 }
 
-function extend(ruleName, handler) {
+function extend(ruleName, defaultErrorMessage, handler) {
     Statement.prototype[ruleName] = function() {
-        return this._addRule(new Rule(ruleName, handler, [].slice.call(arguments)));
+        return this._addRule(new Rule(ruleName, defaultErrorMessage, handler, [].slice.call(arguments)));
     };
 }
 
-extend('required', (value, validator) => {
+extend('required', 'required', (value, validator) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             reject();
         }, 1000);
     });
-    return Promise.reject();
 });
 
-extend('min', (value, validator, length) => {
+extend('min', (fieldName, min) => {
+    return `${fieldName}: ${min}`;
+}, (value, validator, length) => {
     return Promise.reject();
 });
 
 const test = validator([
     field('name').required().min(3),
     field('email').required(),
+    field('phone').required(),
 ], {
     'name.required': 'NAME REQUIRED',
-    'name.min': 'NAME MIN',
-    'email.required': 'EMAIL REQUIRED',
+    'email.required': fieldName => `FIELD REQUIRED: ${fieldName}`,
 });
 
 test

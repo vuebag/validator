@@ -21,8 +21,20 @@ class Validator {
             .then(errors => {
                 const userErrors = [];
                 for (let i = 0; i < errors.length; i++) {
-                    // TODO implement default error messages
-                    userErrors.push(this.messages[ errors[i] ]);
+                    let error = errors[i];
+                    let errorKey = error.field.getName() + '.' + error.rule.getName();
+                    let errorMessage = error.rule.getDefaultErrorMessage();
+
+                    if (typeof this.messages[ errorKey ] !== 'undefined') {
+                        errorMessage = this.messages[ errorKey ];
+                    }
+
+                    if (typeof errorMessage !== 'string') {
+                        let errorArgs = [error.field.getName()].concat(error.rule.getHandlerArgs());
+                        errorMessage = errorMessage.apply(null, errorArgs);
+                    }
+
+                    userErrors.push(errorMessage);
                 }
                 return userErrors;
             });

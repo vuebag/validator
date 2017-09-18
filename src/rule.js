@@ -1,12 +1,21 @@
 class Rule {
-    constructor(name, handler, handlerArgs) {
+    constructor(name, defaultErrorMessage, handler, handlerArgs) {
         this.name = name;
+        this.defaultErrorMessage = defaultErrorMessage;
         this.handler = handler;
         this.handlerArgs = handlerArgs;
     }
 
     getName() {
         return this.name;
+    }
+
+    getDefaultErrorMessage() {
+        return this.defaultErrorMessage;
+    }
+
+    getHandlerArgs() {
+        return this.handlerArgs;
     }
 
     invoke(value, validator) {

@@ -27,8 +27,10 @@ class Statement {
             .series(this.rules, rule => {
                 return this._invokeRule(rule, value, validator)
                     .catch(() => {
-                        const fieldRuleKey = this.field.getName() + '.' + rule.getName();
-                        errors.push(fieldRuleKey);
+                        errors.push({
+                            field: this.field,
+                            rule: rule,
+                        });
                     });
             })
             .then(() => {
