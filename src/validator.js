@@ -13,6 +13,7 @@ class Validator {
         return promiseTools
             .series(this.statements, statement => {
                 const value = objectPath.get(values, statement._getField().getName());
+                // TODO array support
                 return statement._invoke(value, values);
             })
             .then(fieldRuleErrorGroups => {
