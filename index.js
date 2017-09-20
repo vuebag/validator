@@ -22,7 +22,7 @@ function extend(ruleName, defaultErrorMessage, handler) {
     };
 }
 
-extend('required', 'required', (value, values) => {
+extend('required', 'required', value => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(false);
@@ -32,7 +32,7 @@ extend('required', 'required', (value, values) => {
 
 extend('min', (fieldName, min) => {
     return `${fieldName}: ${min}`;
-}, (value, values, length) => {
+}, (value, length) => {
     return false;
 });
 

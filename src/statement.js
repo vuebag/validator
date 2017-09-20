@@ -23,16 +23,12 @@ class Statement {
         return this;
     }
 
-    _invokeRule(rule, value, values) {
-        return Promise.resolve( rule.invoke(value, values) );
-    }
-
-    _invoke(value, values) {
+    _invoke(values) {
         const errors = [];
 
         return promiseTools
             .series(this.rules, rule => {
-                return this._invokeRule(rule, value, values)
+                return this.field.invokeRule(rule, values)
                     .then(valid => {
                         if (!valid) {
                             errors.push(new FieldRuleError(this.field, rule));

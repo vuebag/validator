@@ -1,4 +1,3 @@
-const objectPath = require('object-path');
 const promiseTools = require('./tools/promise');
 
 class Validator {
@@ -11,9 +10,7 @@ class Validator {
     test(values) {
         return promiseTools
             .series(this.statements, statement => {
-                const value = objectPath.get(values, statement._getField().getName());
-                // TODO array support
-                return statement._invoke(value, values);
+                return statement._invoke(values);
             })
             .then(fieldRuleErrorGroups => {
                 return fieldRuleErrorGroups.reduce((a, b) => a.concat(b));
