@@ -1,5 +1,7 @@
 const promiseTools = require('./tools/promise');
 
+// TODO conditional fields?
+// TODO conditional rules?
 class Validator {
     constructor(statements, messages) {
         messages = typeof messages !== 'undefined' ? messages : [];
