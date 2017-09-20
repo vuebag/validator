@@ -27,8 +27,10 @@ class Statement {
         return promiseTools
             .series(this.rules, rule => {
                 return this._invokeRule(rule, value, values)
-                    .catch(() => {
-                        errors.push(new FieldRuleError(this.field, rule));
+                    .then(valid => {
+                        if (!valid) {
+                            errors.push(new FieldRuleError(this.field, rule));
+                        }
                     });
             })
             .then(() => {

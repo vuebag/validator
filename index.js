@@ -25,7 +25,7 @@ function extend(ruleName, defaultErrorMessage, handler) {
 extend('required', 'required', (value, values) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            reject();
+            resolve(false);
         }, 1000);
     });
 });
@@ -33,7 +33,7 @@ extend('required', 'required', (value, values) => {
 extend('min', (fieldName, min) => {
     return `${fieldName}: ${min}`;
 }, (value, values, length) => {
-    return Promise.reject();
+    return false;
 });
 
 const test = validator([
