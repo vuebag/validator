@@ -3,8 +3,7 @@ const promiseTools = require('./tools/promise');
 
 class Validator {
     constructor(statements, messages) {
-        // TODO validate rules is array
-        // TODO validate all elements in rules are valid rules
+        messages = typeof messages !== 'undefined' ? messages : [];
         this.statements = statements;
         this.messages = messages;
     }
