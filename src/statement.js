@@ -11,8 +11,14 @@ class Statement {
         return this.field;
     }
 
+    _hasRule(ruleName) {
+        return this.rules.filter(rule => rule.getName() === ruleName).length > 0;
+    }
+
     _addRule(rule) {
-        // TODO ensure rule is not already added
+        if (this._hasRule(rule.getName())) {
+            throw new Error(`Attempted to add duplicate rule "${rule.getName()}"`);
+        }
         this.rules.push(rule);
         return this;
     }
