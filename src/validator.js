@@ -1,7 +1,13 @@
 const promiseTools = require('./tools/promise');
 
+// TODO transpile source into a /dist/ directory
+// TODO add ability to append rules at a later time
 // TODO conditional fields?
 // TODO conditional rules?
+// TODO add support for OR relation between groups of rules?
+// TODO replace [ field('fieldName').required() ] with { fieldName: Rule().required() }?
+// TODO move the rule definitions to it's own container/schema instead of being bound to a validator instance?
+// TODO depending on the above, provide immutable ways to get schema without specific rules (this would also mean that adding rules should be in an immutable fashion as well)
 class Validator {
     constructor(statements, messages) {
         messages = typeof messages !== 'undefined' ? messages : [];
